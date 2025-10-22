@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.vscode
+.DS_Store
+*.md
+client/src
+client/public
+server/node_modules
+deploy-package
+flat-deploy
+*.zip
+app-logs
+app-logs.zip
