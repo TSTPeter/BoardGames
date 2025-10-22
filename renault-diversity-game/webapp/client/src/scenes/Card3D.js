@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox, Text } from '@react-three/drei';
+import { RoundedBox, Text, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 
 const SUIT_COLORS = {
@@ -89,6 +89,39 @@ function Card3D({
       {/* Card Face (if face up) */}
       {faceUp && card && (
         <>
+          {/* Billboard Value - Always faces camera for maximum visibility */}
+          <Billboard
+            follow={true}
+            lockX={false}
+            lockY={false}
+            lockZ={false}
+          >
+            <Text
+              position={[0, 0.7, 0]}
+              fontSize={0.6}
+              color={suitColor}
+              anchorX="center"
+              anchorY="middle"
+              outlineWidth={0.05}
+              outlineColor="#000000"
+              font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Bold.woff"
+            >
+              {cardValue}
+            </Text>
+            <Text
+              position={[0, 0.3, 0]}
+              fontSize={0.4}
+              color={suitColor}
+              anchorX="center"
+              anchorY="middle"
+              outlineWidth={0.04}
+              outlineColor="#000000"
+              font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Bold.woff"
+            >
+              {suitSymbol}
+            </Text>
+          </Billboard>
+
           {/* Main Value - Larger and more prominent with outline */}
           <Text
             position={[0, 0.03, 0]}
