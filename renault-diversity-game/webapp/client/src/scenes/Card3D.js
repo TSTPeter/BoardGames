@@ -93,11 +93,10 @@ function Card3D({
           <Text
             position={[0, 0.03, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
-            fontSize={0.4}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.4}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
-            font="/fonts/Arial-Bold.ttf"
           >
             {cardValue}
           </Text>
@@ -106,7 +105,7 @@ function Card3D({
           <Text
             position={[0, 0.03, -0.25]}
             rotation={[-Math.PI / 2, 0, 0]}
-            fontSize={0.3}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.3}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
@@ -118,7 +117,7 @@ function Card3D({
           <Text
             position={[-0.3, 0.03, -0.5]}
             rotation={[-Math.PI / 2, 0, 0]}
-            fontSize={0.12}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.12}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
@@ -129,7 +128,7 @@ function Card3D({
           <Text
             position={[-0.3, 0.03, -0.35]}
             rotation={[-Math.PI / 2, 0, 0]}
-            fontSize={0.1}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.1}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
@@ -154,9 +153,10 @@ function Card3D({
         <>
           {/* Renault pattern on back */}
           <Text
-            position={[0, 0.03, 0]}
+              position={[0, 0.03, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
-            fontSize={0.3}
+           
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.3}
             color="#FFCC00"
             anchorX="center"
             anchorY="middle"

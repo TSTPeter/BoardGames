@@ -7,6 +7,7 @@ import socket, { connectSocket } from './utils/socket';
 import LobbyScreen from './components/LobbyScreen';
 import GameBoard from './components/GameBoard';
 import GoldCardModal from './components/GoldCardModal';
+import WaitingRoom from './components/WaitingRoom';
 import Notification from './components/Notification';
 
 const AppContainer = styled.div`
@@ -73,12 +74,14 @@ function App() {
     socket.on('roomCreated', (data) => {
       console.log('Room created:', data);
       setRoom(data);
+      setGameState('waiting');
       setNotification({ type: 'success', message: 'Room created successfully!' });
     });
 
     socket.on('roomJoined', (data) => {
       console.log('Room joined:', data);
       setRoom(data);
+      setGameState('waiting');
       setNotification({ type: 'success', message: 'Joined room successfully!' });
     });
 
@@ -104,6 +107,11 @@ function App() {
       console.log('Game started:', gameStateData);
       setGameState('playing');
       updateGameState(gameStateData);
+      // Update room state to playing
+      const currentRoom = useGameStore.getState().room;
+      if (currentRoom) {
+        currentRoom.state = 'playing';
+      }
       setNotification({ type: 'success', message: 'Game started!' });
     });
 
@@ -218,6 +226,7 @@ function App() {
       </RenaultLogo>
 
       {gameState === 'lobby' && <LobbyScreen />}
+      {gameState === 'waiting' && <WaitingRoom />}
       {(gameState === 'playing' || gameState === 'finished') && <GameBoard />}
       {gameState === 'goldCard' && <GoldCardModal />}
 

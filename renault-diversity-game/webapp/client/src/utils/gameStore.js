@@ -42,12 +42,16 @@ const useGameStore = create((set, get) => ({
 
   setPlayerName: (name) => set({ playerName: name }),
 
-  setRoom: (roomData) => set({
-    roomId: roomData.roomId,
-    room: roomData.room,
-    players: roomData.room.players,
-    isHost: roomData.room.host === get().playerId
-  }),
+  setRoom: (roomData) => {
+    const playerId = get().playerId;
+    console.log('setRoom called - playerId:', playerId, 'host:', roomData.room.host);
+    set({
+      roomId: roomData.roomId,
+      room: roomData.room,
+      players: roomData.room.players,
+      isHost: roomData.room.host === playerId
+    });
+  },
 
   updatePlayers: (players) => set({ players }),
 

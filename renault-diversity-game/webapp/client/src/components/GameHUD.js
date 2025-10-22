@@ -234,7 +234,85 @@ const AbilityPanel = styled(motion.div)`
   }
 `;
 
+// Helper to get card display string
+const getCardDisplay = (card) => {
+  const suitSymbols = { hearts: '♥️', diamonds: '♦️', clubs: '♣️', spades: '♠️' };
+  const valueMap = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+  const displayValue = valueMap[card.value] || card.value;
+  return `${displayValue}${suitSymbols[card.suit] || ''}`;
+};
+
+
+const LeftPanel = styled(motion.div)`
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--renault-yellow);
+  border-radius: 15px;
+  padding: 1.5rem;
+  max-width: 300px;
+  max-height: 70vh;
+  overflow-y: auto;
+  pointer-events: all;
+
+  h3 {
+    color: var(--renault-yellow);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+`;
+
+const CardList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const CardItem = styled.div`
+  background: ${props => props.selected ? 'var(--renault-yellow)' : 'rgba(255, 255, 255, 0.1)'};
+  color: ${props => props.selected ? 'black' : 'white'};
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid ${props => props.selected ? 'var(--renault-yellow)' : 'transparent'};
+
+  &:hover {
+    background: ${props => props.selected ? 'var(--renault-yellow)' : 'rgba(255, 255, 255, 0.2)'};
+    transform: translateX(5px);
+  }
+`;
+
+const TrickPanel = styled(motion.div)`
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--renault-yellow);
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  min-width: 300px;
+  pointer-events: all;
+
+  h3 {
+    color: var(--renault-yellow);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+`;
 function GameHUD() {
+  // Helper to get card display string
+  const getCardDisplay = (card) => {
+    const suitSymbols = { hearts: '♥️', diamonds: '♦️', clubs: '♣️', spades: '♠️' };
+    const valueMap = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+    const displayValue = valueMap[card.value] || card.value;
+    return `${displayValue}${suitSymbols[card.suit] || ''}`;
+  };
+
   const {
     roomId,
     selectedCard,
@@ -394,7 +472,43 @@ function GameHUD() {
           </InfoPanel>
         )}
       </BottomBar>
-    </HUDContainer>
+    
+
+      {/* Your Hand Panel */}
+      <LeftPanel
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <h3>Your Hand ({myHand.length})</h3>
+        <CardList>
+          {myHand.map((card, index) => (
+            <CardItem
+              key={index}
+              selected={selectedCard === index}
+              onClick={() => useGameStore.getState().setSelectedCard(selectedCard === index ? null : index)}
+            >
+              <span className="suit">{getCardDisplay(card)}</span>
+            </CardItem>
+          ))}
+        </CardList>
+      </LeftPanel>
+
+      {/* Current Trick Panel */}
+      {useGameStore.getState().currentTrick && useGameStore.getState().currentTrick.length > 0 && (
+        <TrickPanel
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h3>Current Trick</h3>
+          {useGameStore.getState().currentTrick.map((play, index) => (
+            <p key={index} style={{ margin: '0.25rem 0', color: 'white' }}>
+              {play.playerName}: {getCardDisplay(play.card)}
+            </p>
+          ))}
+        </TrickPanel>
+      )}
+
+</HUDContainer>
   );
 }
 

@@ -324,7 +324,7 @@ function LobbyScreen() {
             type="text"
             placeholder="Room code"
             value={joinRoomId}
-            onChange={(e) => setJoinRoomId(e.target.value.toUpperCase())}
+            onChange={(e) => setJoinRoomId(e.target.value.toLowerCase())}
             maxLength={8}
           />
 
