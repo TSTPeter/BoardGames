@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import useGameStore from '../utils/gameStore';
 import Card3D from '../scenes/Card3D';
+import PlayerHand3D from '../scenes/PlayerHand3D';
 import GameTable from '../scenes/GameTable';
 import WaitingRoom from './WaitingRoom';
 import GameHUD from './GameHUD';
@@ -45,6 +46,7 @@ function GameBoard() {
     selectedCard,
     setSelectedCard,
     players,
+    handSizes,
     room
   } = useGameStore();
 
@@ -141,6 +143,38 @@ function GameBoard() {
                   isSelectable={isMyTurn}
                   isSelected={selectedCard === index}
                   scale={1}
+                />
+              );
+            })}
+
+            {/* Other Players' Hands */}
+            {players && players.filter(p => p.id !== playerId).map((player, index) => {
+              // Position players around the table (excluding the current player)
+              const otherPlayers = players.filter(p => p.id !== playerId);
+              const totalOtherPlayers = otherPlayers.length;
+              const playerIndex = otherPlayers.findIndex(p => p.id === player.id);
+
+              // Distribute players evenly around the table opposite the current player
+              // Start at 0 degrees (top of table) and spread across 180 degrees
+              const angleStart = Math.PI; // Start at back of table
+              const angleRange = Math.PI * 1.5; // Spread across 270 degrees
+              const angle = angleStart - (playerIndex / Math.max(totalOtherPlayers - 1, 1)) * angleRange;
+
+              const radius = 5; // Distance from center
+              const x = Math.sin(angle) * radius;
+              const z = Math.cos(angle) * radius;
+
+              // Get the player's hand size from handSizes array or default to 0
+              const playerHandSize = handSizes && handSizes[players.findIndex(p => p.id === player.id)] || 0;
+
+              return (
+                <PlayerHand3D
+                  key={`player-${player.id}`}
+                  position={[x, 0.5, z]}
+                  rotation={[0, -angle, 0]}
+                  playerName={player.name}
+                  cardCount={playerHandSize}
+                  isCurrentPlayer={currentPlayer && currentPlayer.id === player.id}
                 />
               );
             })}

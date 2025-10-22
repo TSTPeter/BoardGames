@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox, Text } from '@react-three/drei';
+import { RoundedBox, Text, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 
 const SUIT_COLORS = {
@@ -89,38 +89,80 @@ function Card3D({
       {/* Card Face (if face up) */}
       {faceUp && card && (
         <>
-          {/* Main Value */}
+          {/* Billboard Value - Always faces camera for maximum visibility */}
+          <Billboard
+            follow={true}
+            lockX={false}
+            lockY={false}
+            lockZ={false}
+          >
+            <Text
+              position={[0, 0.7, 0]}
+              fontSize={0.6}
+              color={suitColor}
+              anchorX="center"
+              anchorY="middle"
+              outlineWidth={0.05}
+              outlineColor="#000000"
+              font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Bold.woff"
+            >
+              {cardValue}
+            </Text>
+            <Text
+              position={[0, 0.3, 0]}
+              fontSize={0.4}
+              color={suitColor}
+              anchorX="center"
+              anchorY="middle"
+              outlineWidth={0.04}
+              outlineColor="#000000"
+              font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Bold.woff"
+            >
+              {suitSymbol}
+            </Text>
+          </Billboard>
+
+          {/* Main Value - Larger and more prominent with outline */}
           <Text
             position={[0, 0.03, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
-            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.4}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff"
+            fontSize={0.5}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.02}
+            outlineColor="#000000"
           >
             {cardValue}
           </Text>
 
-          {/* Suit Symbol */}
+          {/* Suit Symbol - Larger with outline */}
           <Text
-            position={[0, 0.03, -0.25]}
+            position={[0, 0.03, -0.3]}
             rotation={[-Math.PI / 2, 0, 0]}
-            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.3}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff"
+            fontSize={0.35}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.015}
+            outlineColor="#000000"
           >
             {suitSymbol}
           </Text>
 
-          {/* Corner Values */}
+          {/* Corner Values - Enhanced visibility */}
           <Text
             position={[-0.3, 0.03, -0.5]}
             rotation={[-Math.PI / 2, 0, 0]}
-            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.12}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff"
+            fontSize={0.15}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.01}
+            outlineColor="#000000"
           >
             {cardValue}
           </Text>
@@ -128,10 +170,13 @@ function Card3D({
           <Text
             position={[-0.3, 0.03, -0.35]}
             rotation={[-Math.PI / 2, 0, 0]}
-            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff" fontSize={0.1}
+            font="https://cdn.jsdelivr.net/npm/roboto-fontface@0.10.0/fonts/roboto/Roboto-Regular.woff"
+            fontSize={0.12}
             color={suitColor}
             anchorX="center"
             anchorY="middle"
+            outlineWidth={0.008}
+            outlineColor="#000000"
           >
             {suitSymbol}
           </Text>
