@@ -40,6 +40,34 @@ Simple core mechanics with complexity emerging from challenges, keeping focus on
 ### Discussion-Integrated
 Gold Cards revealed at milestones connect gameplay to D&I research and facilitate meaningful conversations.
 
+## Play Options
+
+### 🎲 Physical Board Game
+Traditional tabletop gameplay with printed cards and facilitator guide.
+See documentation in `/cards/`, `/rules/`, and `/facilitator-guide/`
+
+### 💻 Web Application
+**NEW!** Play online with stunning 3D graphics and multiplayer support!
+
+**Features:**
+- 🎮 Full 3D card rendering with Three.js
+- 🌐 Real-time multiplayer via WebSocket
+- 🤖 AI players to fill out your team
+- 📱 Mobile-responsive design
+- ✨ Renault-branded UI with official colors
+- 🎯 All 10 challenges and Gold Cards
+
+**Quick Start:**
+```bash
+cd webapp
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000` to play!
+
+**[📖 Web App Documentation](webapp/README.md)** | **[🚀 Deployment Guide](webapp/DEPLOYMENT.md)**
+
 ## Components
 
 ### Playing Cards
